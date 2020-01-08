@@ -13,33 +13,32 @@ public class RobotMain {
     public static int ycur;
     public static int xnxt;
     public static int ynxt;
-    public static int rtgo;
-    public static int ltgo;
-    public static int ftgo;
-    public static int btgo;
+    public static int xtgo;
+    public static int ytgo;
 
     public RobotMain() {
     }
 
-    //test comment to see if commits work
-
-
     public static void main(String[] args) {
         System.out.println("spoorzoeken...");
-
 
         while (true) {
             int waardeM = BoeBot.analogRead(0);
             int waardeR = BoeBot.analogRead(1);
             int waardeL = BoeBot.analogRead(2);
 
-            rtgo = xnxt - xcur;
-            ltgo = xcur - xnxt;
-            ftgo = ynxt - ycur;
-            btgo = ycur - ynxt;
+            xcur = 0;
+            xnxt = 3;
+            ycur = 0;
+            ycur = 1;
 
+            xtgo = xnxt - xcur;
+            ytgo = ynxt - ycur;
 
+            s1.update(1550);
+            s2.update(1450);
             BoeBot.wait(40);
+
             if (waardeL > 500 && waardeR <= 500) {
                 s1.update(1500);
                 s2.update(1450);
@@ -50,39 +49,57 @@ public class RobotMain {
                 s1.update(1550);
                 s2.update(1500);
                 BoeBot.wait(100);
+            }
 
+            if (xtgo > 0) {
+                draaiGraden(90, 1);
+                s1.update(1550);
+                s2.update(1450);
                 if (waardeL > 500 && waardeR > 500 && waardeM > 500) {
-                    if (rtgo > 0) {
-                        draaiGraden(90, 1);
-                        s1.update(1550);
-                        s2.update(1450);
-                        rtgo = rtgo- 1;
-                    }
-                    if (ltgo > 0) {
-                        draaiGraden(-90, 1);
-                        s1.update(1550);
-                        s2.update(1450);
-                        ltgo = ltgo- 1;
-                    }
-                    if (ftgo > 0) {
-                        s1.update(1550);
-                        s2.update(1450);
-                        ftgo = ftgo- 1;
-                    }
-                    if (btgo > 0) {
-                        draaiGraden(180, 1);
-                        s1.update(1450);
-                        s2.update(1550);
-                        ynxt = ynxt+ 1;
-                    }
-                    BoeBot.wait(100);
-
-                    } else {
-                        s1.update(1550);
-                        s2.update(1450);
-                        BoeBot.wait(40);
-                    }
+                    xtgo = xtgo - 1;
                 }
+                if (xtgo == 0) {
+                    rem();
+                    draaiGraden(-90, 1);
+                }
+            }
+            if (xtgo < 0) {
+                draaiGraden(-90, 1);
+                s1.update(1550);
+                s2.update(1450);
+                if (waardeL > 500 && waardeR > 500 && waardeM > 500) {
+                    xtgo = xtgo + 1;
+                }
+                if (xtgo == 0) {
+                    rem();
+                    draaiGraden(90, 1);
+                }
+            }
+            if (ytgo > 0) {
+                s1.update(1550);
+                s2.update(1450);
+                if (waardeL > 500 && waardeR > 500 && waardeM > 500) {
+                    ytgo = ytgo - 1;
+                }
+                if (ytgo == 0) {
+                    rem();
+                }
+            }
+            if (ytgo < 0) {
+                s1.update(1450);
+                s2.update(1550);
+                if (waardeL > 500 && waardeR > 500 && waardeM > 500) {
+                    ytgo = ytgo + 1;
+                }
+                if (ytgo == 0) {
+                    rem();
+                }
+            }
+            if(xtgo == 0 && ytgo == 0){
+                rem();
+            }
+            BoeBot.wait(100);
+
             }
         }
 
