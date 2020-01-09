@@ -32,6 +32,12 @@ public class RobotMain {
         xtgo = xnxt - xcur;
         ytgo = ynxt - ycur;
 
+        System.out.println("Path Coordinates: ");
+        System.out.println(PhpCon.jsonGetRequest("http://10.10.10.17/boebot/path.php"));
+        System.out.println();
+        System.out.println("Obstacle Coordinates: ");
+        System.out.println(PhpCon.jsonGetRequest("http://10.10.10.17/boebot/obstakel.php"));
+
         s1.update(1550);
         s2.update(1450);
         BoeBot.wait(1000);
@@ -107,29 +113,29 @@ public class RobotMain {
         }
     }
 
-        public static void rem () {
-            s1.update(1500);
-            s2.update(1500);
-        }
-        public static void draaien ( int draaiSnelheid){
-            int huidigeSnelheid1 = 1500 + draaiSnelheid;
-            int huidigeSnelheid2 = 1500 + draaiSnelheid;
-            s1.update(huidigeSnelheid1);
-            s2.update(huidigeSnelheid2);
-        }
-        public static void draaiGraden ( int graden, int draaiSnelheid){
-            int millis = 4;
-            int max = 200;
+    public static void rem () {
+        s1.update(1500);
+        s2.update(1500);
+    }
+    public static void draaien ( int draaiSnelheid){
+        int huidigeSnelheid1 = 1500 + draaiSnelheid;
+        int huidigeSnelheid2 = 1500 + draaiSnelheid;
+        s1.update(huidigeSnelheid1);
+        s2.update(huidigeSnelheid2);
+    }
+    public static void draaiGraden ( int graden, int draaiSnelheid){
+        int millis = 4;
+        int max = 200;
 
-            draaien(draaiSnelheid);
+        draaien(draaiSnelheid);
 
-            double stap1 = 4.0 / draaiSnelheid;
-            double stap2 = stap1 * 200.0;
-            double stap3 = graden * stap2;
+        double stap1 = 4.0 / draaiSnelheid;
+        double stap2 = stap1 * 200.0;
+        double stap3 = graden * stap2;
 
-            System.out.println(stap3);
-            BoeBot.wait((int) stap3);
-            s1.update(1500);
-            s2.update(1500);
-        }
+        System.out.println(stap3);
+        BoeBot.wait((int) stap3);
+        s1.update(1500);
+        s2.update(1500);
+    }
 }
